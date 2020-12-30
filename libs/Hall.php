@@ -2,22 +2,18 @@
 
 class Hall{
 
-    private int $id;
-
     private string $name;
-
     private int $capacity;
+    private string $buildingName;
 
-    private int $buildingId;
-
-    public function __construct(string $name, int $capacity,int $buildingId) {
+    public function __construct(string $name, int $capacity,string $buildingName) {
         $this->name = $name;
         $this->capacity = $capacity;
-        $this->buildingId=$buildingId;
+        $this->buildingName=$buildingName;
     }
 
-    public function getBuildingId() : string {
-        return $this->buildingId;
+    public function getBuildingName() : string {
+        return $this->buildingName;
     }
 
     public function getName() : string {
