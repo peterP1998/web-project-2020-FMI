@@ -1,23 +1,19 @@
 <?php
 
-class Hall{
-
-    private int $id;
+class Building{
 
     private string $name;
-
     private int $capacity;
 
-    private int $buildingId;
-
-    public function __construct(string $name, int $capacity,int $buildingId) {
+    public function __construct( string $name, int $capacity) {
         $this->name = $name;
         $this->capacity = $capacity;
-        $this->buildingId=$buildingId;
     }
 
-    public function getBuildingId() : string {
-        return $this->buildingId;
+    public static function withArray( $array ) {
+        $name = $array["name"];
+        $capacity = $array["capacity"];
+        return new self($name, $capacity);
     }
 
     public function getName() : string {

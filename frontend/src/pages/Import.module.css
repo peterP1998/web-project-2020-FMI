@@ -1,0 +1,35 @@
+.container {
+    padding: 16px;
+    background-color: white;
+    margin-left: 30%;
+    margin-top: 10%;
+    width: 40%;
+}
+
+input[type=file],
+input[type=number] {
+    border: none;
+    background-color: rgb(233, 230, 230);
+    color: rgb(0, 0, 0);
+}
+
+.uploadButton {
+    background-color: #10207c;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.center {
+    margin: 0;
+    position: absolute;
+    padding-top: 25px;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}

@@ -1,0 +1,22 @@
+.container {
+    padding: 16px;
+    background-color: white;
+    margin-left: 30%;
+    margin-top: 10%;
+    width: 40%;
+}
+
+.exportButton {
+    background-color: #10207c;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.my {
+    margin-bottom: 20%;
+}
