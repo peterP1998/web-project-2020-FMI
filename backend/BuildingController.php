@@ -22,5 +22,12 @@ class BuildingController{
 
         return $result;
    }
+   public function getAllBuildings():array{
+     $connection = DBConnector::getInstance()->getConnection();
+     $statement = $connection->prepare("SELECT name FROM `building`");
+     $statement->execute();
+     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+     return $results;
+   }
 }
 ?>
