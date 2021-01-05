@@ -16,19 +16,27 @@ spl_autoload_register(function($className) {
     require_once("./libs/$className.php");
 });
 
-$hallCtrl = new HallController();
+$buildingCtrl = new BuildingController();
 
 switch ($_SERVER['REQUEST_METHOD']) {
 
     case 'POST': {
         $json = file_get_contents('php://input');
         $obj = json_decode($json,true);
-        $hall = new Hall($obj["hall_name"],$obj["capacity"],$obj["building_name"]);
-        
-        $added = $hallCtrl->addNewHall($hall);
+
+
+        $building = new Building($obj['name'],$obj['capacity']);
+
+
+        $added = $buildingCtrl->addNewBuilding($building);
 
         echo json_encode(['success' => $added]);
 
         break;
     }
+    case 'GET':{
+        $result=$buildingCtrl->getAllBuildings();
+        echo json_encode($result);
+    }
 }
+?>

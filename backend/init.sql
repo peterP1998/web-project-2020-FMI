@@ -1,16 +1,16 @@
-create database if not exists web-project;
-use web-project;
+create database if not exists webproject;
+use webproject;
 
 create table if not exists building(
-  id int NOT NULL PRIMARY KEY,
-  name varchar(256) NOT NULL,
+  id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  name varchar(256) NOT NULL  Unique,
   capacity int NOT NULL
 );
 
 create table if not exists hall(
-  id int NOT NULL PRIMARY KEY,
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name varchar(256) NOT NULL,
   capacity int NOT NULL,
-  building_id int NOT NULL,
-  FOREIGN KEY (building_id) REFERENCES building(id)
+  building_name varchar(256) NOT NULL,
+  FOREIGN KEY (building_name) REFERENCES building(name)
 );
