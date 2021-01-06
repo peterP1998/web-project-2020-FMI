@@ -1,7 +1,7 @@
 <?php
     
     const DB_ENGINE = "mysql";
-    const DB_NAME = "web-project";
+    const DB_NAME = "webproject";
     const DB_USER = "root";
     const DB_PASSWORD = "";
     const DB_HOST = "localhost";

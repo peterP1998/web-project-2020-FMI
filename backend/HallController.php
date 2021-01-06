@@ -8,14 +8,9 @@ class HallController{
        try {
             $connection = DBConnector::getInstance()->getConnection();
 
-            $selectStatement = $connection->prepare("SELECT id From `building` where name=?");
-            $building = array($hall->getBuildingName());
-            $selectStatement->execute($building);
-            $resultSelect=$selectStatement->fetchColumn();
-            printf($resultSelect);
 
-            $insertStatement = $connection->prepare("INSERT INTO `hall` (name, capacity,building_id) VALUES (?,?,?)");
-            $data = array($hall->getName(), $hall->getCapacity(), $resultSelect);
+            $insertStatement = $connection->prepare("INSERT INTO `hall` (name, capacity,building_name) VALUES (?,?,?)");
+            $data = array($hall->getName(), $hall->getCapacity(),$hall->getBuildingName());
 
             $result = $insertStatement->execute($data);
         } catch (PDOException $e) {
