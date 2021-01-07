@@ -23,12 +23,15 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'POST': {
         $json = file_get_contents('php://input');
         $obj = json_decode($json,true);
-        $hall = new Hall($obj["hall_name"],$obj["capacity"],$obj["building_name"]);
-        
-        $added = $hallCtrl->addNewHall($hall);
-
-        echo json_encode(['success' => $added]);
-
+        if(!$hallCtrl->checkBuildingCapacity($obj["building_name"],$obj["capacity"])||$hallCtrl->checkForHallWithThisName($obj["hall_name"],$obj["building_name"])){
+            http_response_code(400);
+        }
+        else{
+            $hall = new Hall($obj["hall_name"],$obj["capacity"],$obj["building_name"]);
+            $added = $hallCtrl->addNewHall($hall);
+            echo json_encode(['success' => $added]);
+            http_response_code(200);
+        }
         break;
     }
 }

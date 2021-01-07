@@ -8,7 +8,7 @@ class AddHall extends Component {
   constructor(props) {
     super(props)
     this.state = {values: [],
-      selectedBuilding: ""}
+      selectedBuilding: "",messg:""}
     this.onSelect=this.onSelect.bind(this)
   }
   componentDidMount() {
@@ -28,7 +28,7 @@ class AddHall extends Component {
     const selectedBuilding = option.value
     this.setState({selectedBuilding});
   }
-  onSelect(e) {
+  onSelect= (e) => {
     e.preventDefault();
     const requestOptions = {
       method: 'POST',
@@ -36,11 +36,18 @@ class AddHall extends Component {
       body: JSON.stringify({ hall_name: e.target[0].value, capacity: e.target[1].value,building_name: this.state.selectedBuilding})
     };
     fetch('http://localhost:80/halls.php', requestOptions)
-      .then(response => console.log(response));
+      .then(response=>{
+        if (!response.ok) {
+          this.setState({messg:"Hall with this name alredy exists or capacity is too big."});
+        }else{
+          this.setState({messg:"Hall added!"});
+        }
+      });
   }
   render() {
     return (
       <div className={styles.container}>
+        <h1>{this.state.messg}</h1>
         <h1>Add new Hall</h1>
       <form onSubmit={this.onSelect}>
         <Dropdown onChange={this.handleSelectBuilding} value={this.state.selectedBuilding} options={this.state.values}  placeholder="Select building" />

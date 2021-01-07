@@ -23,15 +23,15 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'POST': {
         $json = file_get_contents('php://input');
         $obj = json_decode($json,true);
-
-
-        $building = new Building($obj['name'],$obj['capacity']);
-
-
-        $added = $buildingCtrl->addNewBuilding($building);
-
-        echo json_encode(['success' => $added]);
-
+        if($buildingCtrl->checkForBuildingsWithThisName($obj['name'])){
+            http_response_code(400);
+        }
+        else{
+            $building = new Building($obj['name'],$obj['capacity']);
+            $added = $buildingCtrl->addNewBuilding($building);
+            echo json_encode(['success' => $added]);
+            http_response_code(200);
+        }
         break;
     }
     case 'GET':{

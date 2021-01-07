@@ -23,11 +23,22 @@ class BuildingController{
         return $result;
    }
    public function getAllBuildings():array{
-     $connection = DBConnector::getInstance()->getConnection();
-     $statement = $connection->prepare("SELECT name FROM `building`");
-     $statement->execute();
-     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-     return $results;
+        $connection = DBConnector::getInstance()->getConnection();
+        $sql = "Select name from `building`";
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $results;
+   }
+   public function checkForBuildingsWithThisName($name):bool{
+       $connection = DBConnector::getInstance()->getConnection();
+       $statement = $connection->prepare("SELECT * FROM `building` where name=?");
+       $data=array($name);
+       $statement->execute($data);
+       $results =count($statement->fetchAll(PDO::FETCH_ASSOC));
+       if($results!=0){return true;}
+       return false;
    }
 }
 ?>
