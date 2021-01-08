@@ -26,12 +26,6 @@ export const SidebarData = [
     cName: 'nav-text'
   },
   {
-    title: 'Add Booking',
-    path: '/booking',
-    icon: <BsIcons.BsListCheck />,
-    cName: 'nav-text'
-  },
-  {
     title: 'Statistics',
     path: '/statistics',
     icon: <FlatIcons.FcStatistics />,

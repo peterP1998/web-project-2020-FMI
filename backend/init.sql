@@ -3,7 +3,7 @@ use webproject;
 
 create table if not exists building(
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  name varchar(256) NOT NULL  Unique,
+  name varchar(256) NOT NULL Unique,
   capacity int NOT NULL
 );
 
@@ -16,10 +16,8 @@ create table if not exists hall(
 );
 create table if not exists booking(
   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name DATETIME  NOT NULL,
+  start_time DATETIME  NOT NULL,
   duration int NOT NULL,
-  building_name varchar(256) NOT NULL,
-  hall_name varchar(256) NOT NULL,
-  FOREIGN KEY (building_name) REFERENCES building(name)
-  FOREIGN KEY (hall_name) REFERENCES hall(name)
+  hall_id int NOT NULL,
+  FOREIGN KEY (hall_id) REFERENCES hall(id)
 );
