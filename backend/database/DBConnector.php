@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-include 'Config.php';
+include_once('Config.php');
 
 class DBConnector {
 

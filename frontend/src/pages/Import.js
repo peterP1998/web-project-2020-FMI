@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import React, { Component } from "react";
 import styles from "./Import.module.css";
 
@@ -24,14 +22,13 @@ class Import extends Component {
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify(event.target.result)
           };
-          fetch('http://localhost:8888/api/upload.php', requestOptions)
+          fetch('http://localhost:8888/web-project-2020-FMI/backend/services/import.php', requestOptions)
             .then(response=>{
-                console.log(response)
-            //   if (!response.ok) {
-            //     console.log("BAD");
-            //   }else{
-            //     console.log("ok");
-            //   }
+                if(response.ok){
+                    alert("Successful Import");
+                }else{
+                    alert("Exception during Import");
+                }
             });
         };
         

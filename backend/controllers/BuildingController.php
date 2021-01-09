@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-include('../database/DBConnector.php');
-include('../domain/Building.php');
+include_once('../database/DBConnector.php');
+include_once('../domain/Building.php');
 
 class BuildingController
 {

@@ -23,4 +23,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $json = file_get_contents('php://input');
         $importController->importConfiguration($json);
     }
+
+    case 'GET': {
+        $json = file_get_contents('../export.json');
+        $importController->importConfiguration($json);
+    }
 }

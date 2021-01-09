@@ -14,7 +14,7 @@ header('Content-Type: application/json');
 
 
 
-include('../controllers/HallController.php');
+include_once('../controllers/HallController.php');
 
 $hallCtrl = new HallController();
 

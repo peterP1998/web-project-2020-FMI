@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-include('../controllers/ExportController.php');
+include_once('../controllers/ExportController.php');
 
 $exportCtrl = new ExportController();
 

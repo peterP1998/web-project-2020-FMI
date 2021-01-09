@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-include('../database/DBConnector.php');
-include('../domain/Hall.php');
+include_once('../database/DBConnector.php');
+include_once('../domain/Hall.php');
 
 class HallController
 {

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-include('../database/DBConnector.php');
-include('../domain/Booking.php');
+include_once('../database/DBConnector.php');
+include_once('../domain/Booking.php');
 
 class BookingController
 {
