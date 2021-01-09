@@ -9,7 +9,7 @@ class Export extends Component {
     this.state = {jsonfile: {}}
   }
   componentDidMount() {
-    fetch('http://localhost:80/export.php')
+    fetch('http://localhost:8888/web-project-2020-FMI/backend/export.php')
     .then(response => response.json())
     .then(json => {
       this.setState({
@@ -25,7 +25,7 @@ class Export extends Component {
         <a href={`data:text/json;charset=utf-8,${encodeURIComponent(
               JSON.stringify(this.state.jsonfile)
               )}`} 
-            download="samoLevski.json">
+            download="export.json">
             <button className={styles.exportButton} >
               Export
         </button>

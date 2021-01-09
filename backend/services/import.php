@@ -12,17 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-spl_autoload_register(function($className) {
-    require_once("./libs/$className.php");
-});
 
-$exportCtrl = new ExportController();
+include('../controllers/ImportController.php');
+
+$importController = new ImportController();
 
 switch ($_SERVER['REQUEST_METHOD']) {
 
-    case 'GET': {
-        $results = $exportCtrl->exportDatabase();
-        echo json_encode($results);
+    case 'POST': {
+        $json = file_get_contents('php://input');
+        $importController->importConfiguration($json);
     }
 }
-?>

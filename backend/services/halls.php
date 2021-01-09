@@ -12,31 +12,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-spl_autoload_register(function($className) {
-    require_once("./libs/$className.php");
-});
 
-$buildingCtrl = new BuildingController();
+
+include('../controllers/HallController.php');
+
+$hallCtrl = new HallController();
 
 switch ($_SERVER['REQUEST_METHOD']) {
 
     case 'POST': {
         $json = file_get_contents('php://input');
         $obj = json_decode($json,true);
-        if($buildingCtrl->checkForBuildingsWithThisName($obj['name'])){
+        if(!$hallCtrl->checkBuildingCapacity($obj["building_name"],$obj["capacity"])||$hallCtrl->checkForHallWithThisName($obj["hall_name"],$obj["building_name"])){
             http_response_code(400);
         }
         else{
-            $building = new Building($obj['name'],$obj['capacity']);
-            $added = $buildingCtrl->addNewBuilding($building);
+            $hall = new Hall($obj["hall_name"],$obj["capacity"],$obj["building_name"]);
+            $added = $hallCtrl->addNewHall($hall);
             echo json_encode(['success' => $added]);
             http_response_code(200);
         }
         break;
     }
-    case 'GET':{
-        $result=$buildingCtrl->getAllBuildings();
-        echo json_encode($result);
-    }
 }
-?>
