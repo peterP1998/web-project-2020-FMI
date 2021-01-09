@@ -1,5 +1,8 @@
 <?php
 declare(strict_types=1);
+
+include('../database/DBConnector.php');
+
 class ExportController{
 
     public function exportDatabase():array{

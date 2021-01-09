@@ -4,30 +4,48 @@ import React, { Component } from "react";
 import styles from "./Import.module.css";
 
 class Import extends Component {
-    state = {
-        selectedFile: null,
-    };
+    constructor(props) {
+        super(props);
+          this.state = {
+            selectedFile: null
+          }
+       
+      }
 
     onFileChange = (event) => {
         this.setState({ selectedFile: event.target.files[0] });
     };
+
+    handleFileRead = (fileToRead) =>{
+        let reader = new FileReader();
+        reader.onload = function(event) {
+            const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify(event.target.result)
+          };
+          fetch('http://localhost:8888/api/upload.php', requestOptions)
+            .then(response=>{
+                console.log(response)
+            //   if (!response.ok) {
+            //     console.log("BAD");
+            //   }else{
+            //     console.log("ok");
+            //   }
+            });
+        };
+        
+        reader.readAsText(fileToRead);
+    }
 
     onFileUpload = () => {
         if (this.state.selectedFile == null) {
             return;
         }
         if (!this.state.selectedFile.type == "json") {
-            // TODO IMPLEMENT
+            return;
         }
-        const formData = new FormData();
-        formData.append(
-            "myFile",
-            this.state.selectedFile,
-            this.state.selectedFile.name
-        );
-        console.log(this.state.selectedFile);
-
-        //axios.post("api/uploadfile", formData);     // TODO call php server
+        this.handleFileRead(this.state.selectedFile);
     };
 
     fileData = () => {
