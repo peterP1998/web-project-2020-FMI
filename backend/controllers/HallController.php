@@ -16,8 +16,8 @@ class HallController
 
     public function addNewHall(Hall $hall): bool {
         try {
-            $insertStatement = $this->connection->prepare("INSERT INTO `hall` (name, capacity,building_name) VALUES (?,?,?)");
-            $data = array($hall->getName(), $hall->getCapacity(), $hall->getBuildingName());
+            $insertStatement = $this->connection->prepare("INSERT INTO `hall` (name, capacity,building_name,floor) VALUES (?,?,?,?)");
+            $data = array($hall->getName(), $hall->getCapacity(), $hall->getBuildingName(),$hall->getFloor());
             $result = $insertStatement->execute($data);
         } catch (PDOException $e) {
             error_log($e->getMessage());

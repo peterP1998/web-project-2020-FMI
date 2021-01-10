@@ -11,6 +11,7 @@ create table if not exists hall(
   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name varchar(256) NOT NULL,
   capacity int NOT NULL,
+  floor int NOT NULL,
   building_name varchar(256) NOT NULL,
   FOREIGN KEY (building_name) REFERENCES building(name)
 );

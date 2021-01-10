@@ -27,9 +27,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
             http_response_code(400);
         }
         else{
-            $hall = new Hall($obj["hall_name"],$obj["capacity"],$obj["building_name"]);
+            $hall = new Hall($obj["hall_name"],$obj["capacity"],$obj["building_name"],$obj["floor"]);
             $added = $hallCtrl->addNewHall($hall);
-            echo json_encode(['success' => $added]);
             http_response_code(200);
         }
         break;

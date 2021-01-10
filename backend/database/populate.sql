@@ -5,17 +5,17 @@ INSERT INTO building (name,capacity) VALUES ('Rektorat', 1000);
 INSERT INTO building (name,capacity) VALUES ('FHF', 900);
 INSERT INTO building (name,capacity) VALUES ('Stopanski', 600);
 
-INSERT INTO hall (name,capacity,building_name) VALUES ('204',25,'FMI');
-INSERT INTO hall (name,capacity,building_name) VALUES ('300',200,'FMI');
+INSERT INTO hall (name,capacity,building_name,floor) VALUES ('204',25,'FMI',2);
+INSERT INTO hall (name,capacity,building_name,floor) VALUES ('300',200,'FMI',3);
 
-INSERT INTO hall (name,capacity,building_name) VALUES ('101',100,'FHF');
-INSERT INTO hall (name,capacity,building_name) VALUES ('200',220,'FHF');
+INSERT INTO hall (name,capacity,building_name,floor) VALUES ('101',100,'FHF',1);
+INSERT INTO hall (name,capacity,building_name,floor) VALUES ('200',220,'FHF',2);
 
-INSERT INTO hall (name,capacity,building_name) VALUES ('510',80,'Rektorat');
-INSERT INTO hall (name,capacity,building_name) VALUES ('412',190,'Rektorat');
+INSERT INTO hall (name,capacity,building_name,floor) VALUES ('510',80,'Rektorat',5);
+INSERT INTO hall (name,capacity,building_name,floor) VALUES ('412',190,'Rektorat',4);
 
-INSERT INTO hall (name,capacity,building_name) VALUES ('43',25,'Stopanski');
-INSERT INTO hall (name,capacity,building_name) VALUES ('126',30,'Stopanski');
+INSERT INTO hall (name,capacity,building_name,floor) VALUES ('43',25,'Stopanski',2);
+INSERT INTO hall (name,capacity,building_name,floor) VALUES ('126',30,'Stopanski',3);
 
 
 #FMI

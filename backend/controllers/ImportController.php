@@ -17,9 +17,9 @@ class ImportController{
         $this->bookingController = new BookingController();
     }
 
-    public function importConfiguration($strJsonFileContents) {
+    public function importConfiguration(string $json) {
 
-        $decoded = json_decode($strJsonFileContents, true);
+        $decoded = json_decode($json, true);
 
         foreach($decoded as $elem){
 
@@ -30,7 +30,8 @@ class ImportController{
 
             $hallName = $elem['hall_name'];
             $hallCapacity = $elem['hall_capacity'];
-            $hall = new Hall($hallName, (int)$hallCapacity, $buildingName);
+            $hallFloor=$elem['floor'];
+            $hall = new Hall($hallName, (int)$hallCapacity, $buildingName,(int)$hallFloor);
             $hallId = $this->hallController->addIfNotExists($hall);
 
             $startTime = $elem['start_time'];
