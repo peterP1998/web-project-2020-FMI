@@ -7,11 +7,11 @@ class AddHall extends Component {
   
   constructor(props) {
     super(props)
-    this.state = {values: [], selectedBuilding: "",messg:""}
+    this.state = {values: [], selectedBuilding: "",cmessg:""}
     this.onSelect=this.onSelect.bind(this);
   }
   componentDidMount() {
-    fetch('http://localhost:80/buildings.php')
+    fetch('http://localhost:8888/web-project-2020-FMI/backend/services/buildings.php')
     .then(response => response.json())
     .then(json => {
       var names=[]
@@ -32,7 +32,10 @@ class AddHall extends Component {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ hall_name: e.target[0].value, capacity: e.target[1].value,building_name: this.state.selectedBuilding})
+      body: JSON.stringify({ hall_name: e.target[0].value,
+                            capacity: e.target[1].value,
+                            building_name: this.state.selectedBuilding,
+                            floor: e.target[2].value})
     };
     fetch('http://localhost:8888/web-project-2020-FMI/backend/services/halls.php', requestOptions)
       .then(response=>{
@@ -53,6 +56,8 @@ class AddHall extends Component {
         <input type="text" placeholder="Enter Name" name="name" id="name" required />
         <div></div>
         <input type="number" min="0" placeholder="Enter capacity" name="cap" id="cap" required />
+        <div></div>
+        <input type="number" placeholder="Enter floor" name="floor" id="floor" required />
         <div></div>
         <button type="submit" className={styles.registerbtn} >Add</button>
       </form>

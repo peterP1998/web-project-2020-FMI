@@ -57,7 +57,6 @@ class Statistics extends Component {
         </div>
         <div className={styles.datepicker}>
           <DatePicker selected={this.state.date}  
-                      onSelect={date => this.setStartDate(date)}
                       onChange={date => this.setStartDate(date)}/>
         </div>
       </div>
