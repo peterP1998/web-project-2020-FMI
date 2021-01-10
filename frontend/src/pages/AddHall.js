@@ -7,9 +7,8 @@ class AddHall extends Component {
   
   constructor(props) {
     super(props)
-    this.state = {values: [],
-      selectedBuilding: "",messg:""}
-    this.onSelect=this.onSelect.bind(this)
+    this.state = {values: [], selectedBuilding: "",messg:""}
+    this.onSelect=this.onSelect.bind(this);
   }
   componentDidMount() {
     fetch('http://localhost:80/buildings.php')
@@ -35,7 +34,7 @@ class AddHall extends Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ hall_name: e.target[0].value, capacity: e.target[1].value,building_name: this.state.selectedBuilding})
     };
-    fetch('http://localhost:80/halls.php', requestOptions)
+    fetch('http://localhost:8888/web-project-2020-FMI/backend/services/halls.php', requestOptions)
       .then(response=>{
         if (!response.ok) {
           this.setState({messg:"Hall with this name alredy exists or capacity is too big."});

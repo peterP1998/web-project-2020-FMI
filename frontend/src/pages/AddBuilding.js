@@ -16,7 +16,7 @@ class AddBuilding extends Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: event.target[0].value, capacity: event.target[1].value })
     };
-    fetch('http://localhost:80/buildings.php', requestOptions)
+    fetch('http://localhost:8888/web-project-2020-FMI/backend/services/buildings.php', requestOptions)
       .then(response=>{
         if (!response.ok) {
           this.setState({messg:"Building with this name already exists."});
