@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-include('../controllers/BuildingController.php');
+include_once('../controllers/BuildingController.php');
 
 $buildingCtrl = new BuildingController();
 

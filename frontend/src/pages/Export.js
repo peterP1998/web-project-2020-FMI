@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import React, { Component } from "react";
 import styles from "./Export.module.css";
 
@@ -9,7 +7,7 @@ class Export extends Component {
     this.state = {jsonfile: {}}
   }
   componentDidMount() {
-    fetch('http://localhost:8888/web-project-2020-FMI/backend/export.php')
+    fetch('http://localhost:8888/web-project-2020-FMI/backend/services/export.php')
     .then(response => response.json())
     .then(json => {
       this.setState({

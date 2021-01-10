@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-include('BuildingController.php');
-include('HallController.php');
-include('BookingController.php');
+include_once('BuildingController.php');
+include_once('HallController.php');
+include_once('BookingController.php');
 
 class ImportController{
 
@@ -38,8 +38,7 @@ class ImportController{
             $booking = new Booking($startTime,(int)$duration,(int)$hallId);
             $this->bookingController->addIfNotExists($booking);            
            
-        }
-        //echo "Success";        
+        }       
     }
     
 }
