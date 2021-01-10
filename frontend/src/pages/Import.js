@@ -20,7 +20,7 @@ class Import extends Component {
             const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify(event.target.result)
+            body: event.target.result
           };
           fetch('http://localhost:8888/web-project-2020-FMI/backend/services/import.php', requestOptions)
             .then(response=>{

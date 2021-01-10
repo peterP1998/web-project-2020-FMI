@@ -23,13 +23,22 @@
 .dropdown {
     margin-top: 2%;
     margin-left: 25%;
-    width: 30%;
+    width: 20%;
+}
+
+.datepicker {
+    padding-left: 30px;
+    position: absolute;
+    top: 13%;
+    left: 45%;
+    width: 150px;
+    height: 30px;
 }
 
 .btn {
     position: absolute;
     top: 15%;
-    right: 33%;
+    left: 58%;
     width: 150px;
     height: 40px;
     background-color: #10207c;
