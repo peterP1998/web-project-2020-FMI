@@ -7,7 +7,7 @@ import "react-dropdown/style.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import BarChart from "../components/BarChart";
+import DoughnutChart from "../components/DoughnutChart";
 
 class HallStatistics extends Component {
 
@@ -15,30 +15,53 @@ class HallStatistics extends Component {
         super(props);
         this.state = {
           configuration: "",
-          builidings: [],
+          buildings: [],
           halls: [],
           selectedBuilding: "",
           selectedHall: "",
           date: new Date(),
           chartData: [],
           show: false,
+          data:"",
         };
       }
+    onlyUnique(value, index, self) {
+      return self.indexOf(value) === index;
+    }
     componentDidMount() {
-        fetch('http://localhost:8888/web-project-2020-FMI/backend/services/buildings.php')
-        .then(response => response.json())
-        .then(json => {
-          var names=[]
-          for(var k in json) {
-            names.push(json[k]["name"]);
+        fetch('http://localhost:8888/web-project-2020-FMI/backend/services/export.php')
+        .then((response) => response.json())
+        .then((json) => {
+          var names = []
+          for (var k in json) {
+            names.push(json[k]["building_name"]);
           }
           this.setState({
-            builidings: names
+            configuration: json,
+            buildings: names.filter(this.onlyUnique)
           });
-        });
-      }
+      });
+        
+    }
+    setStartDate = (dateToSet) => {
+      this.setState({
+        date: dateToSet,
+      });
+    };
+    formatDate(date) {
+      var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d.getFullYear();
+  
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+  
+      return [year, month, day].join("-");
+    }
     handleSelectBuilding = (option)=> {
       const selectedBuilding = option.value
+      this.setState({ selectedBuilding });
       this.setState({selectedHall:""});
       fetch('http://localhost:8888/web-project-2020-FMI/backend/services/halls.php?name='+selectedBuilding)
       .then(response => response.json())
@@ -56,6 +79,47 @@ class HallStatistics extends Component {
       const selectedHall = option.value
       this.setState({selectedHall});
     }
+    handleOnClick = () => {
+      this.setState({ show: true });
+      let buidlingName = this.state.selectedBuilding;
+      let hallName = this.state.selectedHall;
+      let selectedDate = this.formatDate(this.state.date);
+      var fetchedData = this.state.configuration;
+
+      var info=this.statisticsForHallForDay(buidlingName,hallName, selectedDate, fetchedData)
+      let current = [];
+      current.push({
+        data: info,
+      });
+     
+      this.setState({chartData:current});
+    }
+    statisticsForHallForDay(buidlingName,hallName, selectedDate, fetchedData){
+      var timeBoked=0;
+      let info = [];
+
+      for (var record in fetchedData) {
+        let currentBuildingName = fetchedData[record]["building_name"];
+        let currentDuration = fetchedData[record]["duration"];
+        let currentDateAsArray = fetchedData[record]["start_time"].split(" ");
+        let currenthallName = fetchedData[record]["hall_name"];
+        if(currentDateAsArray[0]===selectedDate &&currenthallName===hallName &&currentBuildingName===buidlingName){
+          timeBoked+=parseInt(currentDuration)
+        }
+      }
+       info.push({
+        label: "Booked "+(timeBoked/12)*100+"%",
+        value: timeBoked,
+        backgroundColor: "#70CAD1",
+      });
+      var timeLeft=12-timeBoked
+      info.push({
+        label: "Free "+(timeLeft/12)*100+"%",
+        value: timeLeft,
+        backgroundColor: "#70CAD1",
+      });
+      return info
+    }
     render() {
         return (
           <div>
@@ -63,7 +127,7 @@ class HallStatistics extends Component {
               <Dropdown
                 onChange={this.handleSelectBuilding}
                 value={this.state.selectedBuilding}
-                options={this.state.builidings}
+                options={this.state.buildings}
                 placeholder="Select building"
               />
             </div>
@@ -90,6 +154,14 @@ class HallStatistics extends Component {
                 onChange={(date) => this.setStartDate(date)}
               />
             </div>
+            {this.state.show && (
+            <div className={styles.chart}>
+              <DoughnutChart
+                data={this.state.chartData[0].data}
+                colors={['#d40b1f','#343deb']}
+              />
+          </div>
+        )}
           </div>
         );
       }
