@@ -24,7 +24,38 @@ class HallStatistics extends Component {
           show: false,
         };
       }
-
+    componentDidMount() {
+        fetch('http://localhost:8888/web-project-2020-FMI/backend/services/buildings.php')
+        .then(response => response.json())
+        .then(json => {
+          var names=[]
+          for(var k in json) {
+            names.push(json[k]["name"]);
+          }
+          this.setState({
+            builidings: names
+          });
+        });
+      }
+    handleSelectBuilding = (option)=> {
+      const selectedBuilding = option.value
+      this.setState({selectedHall:""});
+      fetch('http://localhost:8888/web-project-2020-FMI/backend/services/halls.php?name='+selectedBuilding)
+      .then(response => response.json())
+      .then(json => {
+        var names=[]
+        for(var k in json) {
+          names.push(json[k]["name"]);
+        }
+        this.setState({
+          halls: names
+        });
+      });
+    }
+    handleSelectHall = (option)=> {
+      const selectedHall = option.value
+      this.setState({selectedHall});
+    }
     render() {
         return (
           <div>
@@ -41,7 +72,7 @@ class HallStatistics extends Component {
                 onChange={this.handleSelectHall}
                 value={this.state.selectedHall}
                 options={this.state.halls}
-                placeholder="Select floor"
+                placeholder="Select Hall"
               />
             </div>
             <div>

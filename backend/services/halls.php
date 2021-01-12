@@ -33,4 +33,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         break;
     }
+    case 'GET':{
+      $results = $hallCtrl->getAllHallsForBuilding($_GET['name']);
+      echo json_encode($results);
+    }
 }
