@@ -16,7 +16,7 @@ class FloorStatistics extends Component {
       values: [],
       selectedBuilding: "",
       date: new Date(),
-      chartData: [],
+      chartData: {},
       show: false,
     };
   }
@@ -70,56 +70,114 @@ class FloorStatistics extends Component {
     e.preventDefault();
   };
 
-  getChart = (buidlingName, selectedDate, fetchedData) => {
-    let floors = new Map();
-    let floorRooms = new Map();
-    let floorCapacity = new Map();
-    let roomCapacity = new Map();
-
-    for (var record in fetchedData) {
-        let currentBuildingName = fetchedData[record]["building_name"];
-        let currentHallName = fetchedData[record]["hall_name"];
-        let capacity = parseInt(fetchedData[record]["hall_capacity"]);
-        let floor = parseInt(fetchedData[record]["floor"]);
-        
-        roomCapacity.set(currentHallName, capacity);
-        if(currentBuildingName === buidlingName){
-            if(floorRooms.has(floor)){
-                let currentRoomsSet = floorCapacity.get(floor);
-                currentRoomsSet.add(currentHallName);
-                floorRooms.set(floor, currentRoomsSet);
-            }else{
-                let currentRoomsSet = new Set();
-                currentRoomsSet.add(currentHallName);
-                floorRooms.set(floor, currentRoomsSet);
-            }   
-        }
-    }
-
-    for (let [floorNumber, roomsSet] of floorRooms) {
-      let floorCap = roomsSet.reduce((a, b) => a + b, 0);
-      floorCapacity.set(floorNumber, floorCap);
-    }
-  }
-
   handleOnClick = () => {
     this.setState({ show: true });
     let buidlingName = this.state.selectedBuilding;
     let selectedDate = this.formatDate(this.state.date);
     var fetchedData = this.state.configuration;
 
-    let percentBookedHalls = this.getChart(
-        buidlingName,
-        selectedDate,
-        fetchedData
-      );
+    let data = this.getChart(
+      buidlingName,
+      selectedDate,
+      fetchedData
+    );
 
-    let current = [];
-    current.push({
-      title: "Процент на заети зали",
-      data: percentBookedHalls,
-    });
-    this.setState({ chartData: current });
+    this.setState({chartData: data});
+  };
+
+  getRandomColor = () => {
+    return (
+      "#" + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
+    );
+  };
+
+  getChart = (buidlingName, selectedDate, fetchedData) => {
+    let graphics = new Map();
+    let floorRooms = new Map();
+    let floorCapacity = new Map();
+    let roomCapacity = new Map();
+
+    for (var record in fetchedData) {
+      var currentBuildingName = fetchedData[record]["building_name"];
+      var currentHallName = fetchedData[record]["hall_name"];
+      var capacity = parseInt(fetchedData[record]["hall_capacity"]);
+      var floor = parseInt(fetchedData[record]["floor"]);
+      var currentDate = fetchedData[record]["start_time"].split(" ")[0];
+
+      if (
+        currentBuildingName === buidlingName &&
+        selectedDate === currentDate
+      ) {
+        roomCapacity.set(currentHallName, capacity);
+        graphics.set(floor, new Map());
+
+        if (floorRooms.has(floor)) {
+          let currentRoomsSet = floorRooms.get(floor);
+          currentRoomsSet.add(currentHallName);
+          floorRooms.set(floor, currentRoomsSet);
+        } else {
+          let currentRoomsSet = new Set();
+          currentRoomsSet.add(currentHallName);
+          floorRooms.set(floor, currentRoomsSet);
+        }
+      }
+    }
+
+    for (let [floorNumber, roomsSet] of floorRooms) {
+      let floorCap = 0;
+      for (let element of roomsSet) {
+        floorCap += roomCapacity.get(element);
+      }
+      floorCapacity.set(floorNumber, floorCap);
+    }
+
+    for (var record in fetchedData) {
+      let currentBuildingName = fetchedData[record]["building_name"];
+      let currentHour = parseInt(
+        fetchedData[record]["start_time"].split(" ")[1].split(":")[0]
+      );
+      let floor = parseInt(fetchedData[record]["floor"]);
+      let capacity = parseInt(fetchedData[record]["hall_capacity"]);
+      let duration = parseInt(fetchedData[record]["duration"]);
+      var currentDate = fetchedData[record]["start_time"].split(" ")[0];
+
+      if (
+        currentBuildingName === buidlingName &&
+        selectedDate === currentDate
+      ) {
+        let zaetostMap = graphics.get(floor);
+        for (let i = 0; i < duration; i++) {
+          if (zaetostMap.has(currentHour + i)) {
+            let zaetost = zaetostMap.get(currentHour + i);
+            zaetostMap.set(currentHour + i, zaetost + capacity);
+          } else {
+            zaetostMap.set(currentHour + i, capacity);
+          }
+        }
+        graphics.set(floor, zaetostMap);
+      }
+    }
+
+    let data = { labels: [], datasets: [] };
+    for (let [_, zaetostMap] of graphics) {
+      for (let [hour, _] of zaetostMap) {
+        data.labels.push(hour + "-" + (hour + 1) + " часа");
+      }
+    }
+
+    for (let [floorNum, zaetostMap] of graphics) {
+      let info = [];
+      for (let [_, zaetost] of zaetostMap) {
+        info.push(zaetost/floorCapacity.get(floorNum) * 100);
+      }
+      data.datasets.push({
+        data: info,
+        label: "етаж " + floorNum.toString(),
+        borderColor: this.getRandomColor(),
+        fill: false,
+      });
+    }
+    return data;
   };
 
   render() {
@@ -149,12 +207,8 @@ class FloorStatistics extends Component {
           />
         </div>
         {this.state.show && (
-          <div>
-            <LineChart
-              data={this.state.chartData[0].data}
-              title={this.state.chartData[0].title}
-              color="#59124d"
-            />
+          <div className={styles.chart1}>
+            <LineChart data={this.state.chartData}/>
           </div>
         )}
       </div>
