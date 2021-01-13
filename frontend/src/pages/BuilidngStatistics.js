@@ -6,9 +6,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import BarChart from "../components/BarChart";
-import styles from "./Statistics.module.css";
+import styles from "./BuildingStatistics.module.css";
 
-class Statistics extends Component {
+class BuildingStatistics extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -92,7 +92,7 @@ class Statistics extends Component {
           if (bookings.has(parseInt(currentHour) + i)) {
             bookings.set(
               parseInt(currentHour) + i,
-              bookings.get(currentHour) + 1
+              bookings.get(parseInt(currentHour) + i) + 1
             );
           } else {
             bookings.set(parseInt(currentHour) + i, 1);
@@ -131,10 +131,10 @@ class Statistics extends Component {
           if (bookings.has(parseInt(currentHour) + i)) {
             bookings.set(
               parseInt(currentHour) + i,
-              bookings.get(currentHour) + capacity
+              bookings.get(parseInt(currentHour) + i) + parseInt(capacity)
             );
           } else {
-            bookings.set(parseInt(currentHour) + i, capacity);
+            bookings.set(parseInt(currentHour) + i, parseInt(capacity));
           }
         }
       }
@@ -207,10 +207,9 @@ class Statistics extends Component {
         {this.state.show && (
           <div className={styles.chart1}>
             <BarChart
-              ref={ref => this.chartRefernece = ref}
               data={this.state.chartData[0].data}
               title={this.state.chartData[0].title}
-              color="#70CAD1" redraw={true}
+              color="#70CAD1"
             />
           </div>
         )}
@@ -219,7 +218,7 @@ class Statistics extends Component {
             <BarChart
               data={this.state.chartData[1].data}
               title={this.state.chartData[1].title}
-              color="#59124d" redraw={true}
+              color="#59124d"
             />
           </div>
         )}
@@ -228,4 +227,4 @@ class Statistics extends Component {
   }
 }
 
-export default Statistics;
+export default BuildingStatistics;

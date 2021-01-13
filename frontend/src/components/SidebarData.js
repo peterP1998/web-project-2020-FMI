@@ -26,8 +26,20 @@ export const SidebarData = [
     cName: 'nav-text'
   },
   {
-    title: 'Statistics',
-    path: '/statistics',
+    title: 'Statistics per building',
+    path: '/building-stats',
+    icon: <FlatIcons.FcStatistics />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Statistics per floor',
+    path: '/floor-stats',
+    icon: <FlatIcons.FcStatistics />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Statistics per hall',
+    path: '/hall-stats',
     icon: <FlatIcons.FcStatistics />,
     cName: 'nav-text'
   },

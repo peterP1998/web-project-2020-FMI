@@ -16,6 +16,19 @@ class LineChart extends Component {
     componentDidMount() {
       this.myChart = new Chart(this.canvasRef.current, {
         type: 'line',
+        options: {
+          maintainAspectRatio: false,
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                min: 0,
+                max: 100
+              }
+            }
+          ]
+        }
+      },
         data: {
           labels: this.props.data.map(d => d.time),
           datasets: [{
