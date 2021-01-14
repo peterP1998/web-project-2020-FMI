@@ -69,7 +69,7 @@ class BuildingStatistics extends Component {
   onSelect = (e) => {
     e.preventDefault();
   };
-
+   
   statisticPercentOfBookedHalls = (buidlingName, selectedDate, fetchedData) => {
     let bookings = new Map();
     let halls = new Set();

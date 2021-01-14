@@ -8,7 +8,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import DoughnutChart from "../components/DoughnutChart";
-
+import LineChart from "../components/LineChart";
 class HallStatistics extends Component {
 
     constructor(props) {
@@ -21,6 +21,7 @@ class HallStatistics extends Component {
           selectedHall: "",
           date: new Date(),
           chartData: [],
+          lineChartData:{},
           show: false,
           data:"",
         };
@@ -87,12 +88,40 @@ class HallStatistics extends Component {
       var fetchedData = this.state.configuration;
 
       var info=this.statisticsForHallForDay(buidlingName,hallName, selectedDate, fetchedData)
+      var data=this.lineChartForHallForDay(buidlingName,hallName, selectedDate, fetchedData)
       let current = [];
       current.push({
         data: info,
       });
      
-      this.setState({chartData:current});
+      this.setState({chartData:current,lineChartData:data});
+    }
+    lineChartForHallForDay(buidlingName,hallName, selectedDate, fetchedData){
+      let data = { labels: [], datasets: [] };
+      let info = [];
+      for(let i=8; i<20;i++){
+        info.push(0);
+      }
+      data.labels = ["8-9","9-10","10-11","11-12","12-13","13-14","14-15","15-16","16-17","17-18","18-19","19-20"];
+      for (var record in fetchedData) {
+        let currentBuildingName = fetchedData[record]["building_name"];
+        let currentDuration = fetchedData[record]["duration"];
+        let currentDateAsArray = fetchedData[record]["start_time"].split(" ");
+        let currenthallName = fetchedData[record]["hall_name"];
+        if(currentDateAsArray[0]===selectedDate &&currenthallName===hallName &&currentBuildingName===buidlingName){
+          let currentHour = currentDateAsArray[1].split(":")[0];
+          for(let i=0;i<parseInt(currentDuration);i++){
+             info[parseInt(currentHour)+i-8]=100;
+          }
+        }
+      }
+      data.datasets.push({
+        data: info,
+        label: "Заетост по часове за зала "+hallName,
+        borderColor: this.getRandomColor(),
+        fill: false,
+      });
+      return data
     }
     statisticsForHallForDay(buidlingName,hallName, selectedDate, fetchedData){
       var timeBoked=0;
@@ -122,6 +151,11 @@ class HallStatistics extends Component {
       });
       return info
     }
+    getRandomColor = () => {
+      return (
+        "#" + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
+      );
+    };
     render() {
         return (
           <div>
@@ -157,11 +191,16 @@ class HallStatistics extends Component {
               />
             </div>
             {this.state.show && (
-            <div className={styles.chart}>
+            <div className={styles.chart1}>
               <DoughnutChart
                 data={this.state.chartData[0].data}
                 colors={['#d40b1f','#343deb']}
               />
+          </div>
+        )}
+           {this.state.show && (
+          <div className={styles.chart2}>
+            <LineChart data={this.state.lineChartData}/>
           </div>
         )}
           </div>
