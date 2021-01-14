@@ -169,7 +169,6 @@ class FloorStatistics extends Component {
       for (let [hour, zaetost] of zaetostMap) {
         info[hour-8] = (zaetost/floorCapacity.get(floorNum) * 100);
       }
-
       data.datasets.push({
         data: info,
         label: "етаж " + floorNum.toString(),
