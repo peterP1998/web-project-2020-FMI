@@ -17,8 +17,8 @@ class BuildingController
     public function addNewBuilding(Building $building): bool {
 
         try {
-            $insertStatement = $this->connection ->prepare("INSERT INTO `building` (name, capacity) VALUES (?,?)");
-            $data = array($building->getName(), $building->getCapacity());
+            $insertStatement = $this->connection ->prepare("INSERT INTO `building` (name, capacity,latitude,longitude) VALUES (?,?,?,?)");
+            $data = array($building->getName(), $building->getCapacity(),$building->getLatitude(),$building->getLongitude());
 
             $result = $insertStatement->execute($data);
         } catch (PDOException $e) {

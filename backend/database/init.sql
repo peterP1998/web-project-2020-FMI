@@ -4,9 +4,9 @@ use webproject;
 create table if not exists building(
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name varchar(256) NOT NULL Unique,
-  latitude DECIMAL(9,7) NOT NULL,
-  longitude DECIMAL(9,7) NOT NULL,
-  capacity int NOT NULL
+  capacity int NOT NULL,
+  latitude DECIMAL(9,7),
+  longitude DECIMAL(9,7)
 );
 
 create table if not exists hall(
