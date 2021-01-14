@@ -104,10 +104,7 @@ class FloorStatistics extends Component {
       var floor = parseInt(fetchedData[record]["floor"]);
       var currentDate = fetchedData[record]["start_time"].split(" ")[0];
 
-      if (
-        currentBuildingName === buidlingName &&
-        selectedDate === currentDate
-      ) {
+      if (currentBuildingName === buidlingName) {
         roomCapacity.set(currentHallName, capacity);
         graphics.set(floor, new Map());
 
