@@ -159,16 +159,15 @@ class FloorStatistics extends Component {
     }
 
     let data = { labels: [], datasets: [] };
-    for (let [_, zaetostMap] of graphics) {
-      for (let [hour, _] of zaetostMap) {
-        data.labels.push(hour + "-" + (hour + 1) + " часа");
-      }
-    }
+    data.labels = ["8-9","9-10","10-11","11-12","12-13","13-14","14-15","15-16","16-17","17-18","18-19","19-20"];
 
     for (let [floorNum, zaetostMap] of graphics) {
       let info = [];
-      for (let [_, zaetost] of zaetostMap) {
-        info.push(zaetost/floorCapacity.get(floorNum) * 100);
+      for(let i=8; i<20;i++){
+        info.push(0);
+      }
+      for (let [hour, zaetost] of zaetostMap) {
+        info[hour-8] = (zaetost/floorCapacity.get(floorNum) * 100);
       }
       data.datasets.push({
         data: info,
