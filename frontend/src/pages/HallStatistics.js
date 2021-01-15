@@ -107,14 +107,16 @@ class HallStatistics extends Component {
           timeBoked+=parseInt(currentDuration)
         }
       }
+      let booked = (timeBoked/12)*100;
        info.push({
-        label: "Booked "+(timeBoked/12)*100+"%",
+        label: "Booked "+ booked.toFixed(2) +"%",
         value: timeBoked,
         backgroundColor: "#70CAD1",
       });
       var timeLeft=12-timeBoked
+      let free = (timeLeft/12)*100;
       info.push({
-        label: "Free "+(timeLeft/12)*100+"%",
+        label: "Free "+ free.toFixed(2) +"%",
         value: timeLeft,
         backgroundColor: "#70CAD1",
       });
