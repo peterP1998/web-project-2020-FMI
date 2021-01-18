@@ -19,7 +19,7 @@ function App() {
           <Route path='/' exact component={Home} />
           <Route path='/buildings' component={AddBuilding} />
           <Route path='/halls' component={AddHall} />
-          <Route path='/building-stats' component={BuildingStatistics} />
+          <Route path='/building-stats/:date?/:name?' component={BuildingStatistics} />
           <Route path='/floor-stats' component={FloorStatistics} />
           <Route path='/hall-stats' component={HallStatistics} />
           <Route path='/import' component={Import} />

@@ -1,9 +1,9 @@
 USE webproject;
 
-INSERT INTO building (name,capacity) VALUES ('FMI', 800);
-INSERT INTO building (name,capacity) VALUES ('Rektorat', 1000);
-INSERT INTO building (name,capacity) VALUES ('FHF', 900);
-INSERT INTO building (name,capacity) VALUES ('Stopanski', 600);
+INSERT INTO building (name,capacity,latitude,longitude) VALUES ('FMI', 800,32.43242,32.545353);
+INSERT INTO building (name,capacity,latitude,longitude) VALUES ('Rektorat', 1000,14.53253,88.321342);
+INSERT INTO building (name,capacity,latitude,longitude) VALUES ('FHF', 900,23.32131,76.75894);
+INSERT INTO building (name,capacity,latitude,longitude) VALUES ('Stopanski', 600,25.54353,28.42342);
 
 INSERT INTO hall (name,capacity,building_name,floor) VALUES ('204',25,'FMI',2);
 INSERT INTO hall (name,capacity,building_name,floor) VALUES ('300',200,'FMI',3);

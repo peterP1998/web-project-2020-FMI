@@ -14,8 +14,14 @@ class Export extends Component {
         jsonfile: json
       });
     })
-    
   }
+
+  deleteDB = () => {
+    fetch('http://localhost:8888/web-project-2020-FMI/backend/services/dropDB.php', {
+      method: 'DELETE'
+    });
+  }
+
   render() {
     return (
       <div className={styles.container}>
@@ -24,9 +30,8 @@ class Export extends Component {
               JSON.stringify(this.state.jsonfile)
               )}`} 
             download="export.json">
-            <button className={styles.exportButton} >
-              Export
-        </button>
+          <button className={styles.exportButton}>Export</button>
+          <button className={styles.exportButton} onClick={this.deleteDB}>Export with delete</button>
         </a>
       </div>
     );

@@ -25,7 +25,9 @@ class ImportController{
 
             $buildingName = $elem['building_name'];
             $buildingCapacity = $elem['building_capacity'];
-            $building = new Building($buildingName, (int)$buildingCapacity);
+            $latitude=$elem['latitude'];
+            $longitude=$elem['longitude'];
+            $building = new Building($buildingName, (int)$buildingCapacity,(float)$latitude,(float)$longitude);
             $this->buildingController->addIfNotExists($building);
 
             $hallName = $elem['hall_name'];

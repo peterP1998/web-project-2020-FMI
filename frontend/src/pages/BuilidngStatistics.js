@@ -8,14 +8,29 @@ import "react-datepicker/dist/react-datepicker.css";
 import BarChart from "../components/BarChart";
 import styles from "./BuildingStatistics.module.css";
 
+
+
 class BuildingStatistics extends Component {
   constructor(props) {
     super(props);
+
+    let nameToSet = this.props.match.params.name;
+    let dateToSet = this.props.match.params.date;
+
+    let calledAsAPI = true;
+
+    if (!(nameToSet && dateToSet)){
+      nameToSet = "";
+      dateToSet = new Date().toDateString();     
+      calledAsAPI = false;
+    }
+
     this.state = {
+      calledAsAPI: calledAsAPI,
       configuration: "",
       values: [],
-      selectedBuilding: "",
-      date: new Date(),
+      selectedBuilding: nameToSet,
+      date: new Date(dateToSet),
       chartData: [],
       show: false,
     };
@@ -52,6 +67,13 @@ class BuildingStatistics extends Component {
           configuration: json,
           values: names.filter(this.onlyUnique),
         });
+
+        if(this.state.calledAsAPI){     
+          let date = this.state.date.setDate(this.state.date.getDate() + 1);
+          this.func(this.state.selectedBuilding,this.formatDate(date),json);
+          this.setState({show:true, date:date});
+        }
+        
       });
   }
 
@@ -69,7 +91,7 @@ class BuildingStatistics extends Component {
   onSelect = (e) => {
     e.preventDefault();
   };
-
+   
   statisticPercentOfBookedHalls = (buidlingName, selectedDate, fetchedData) => {
     let bookings = new Map();
     let halls = new Set();
@@ -149,12 +171,7 @@ class BuildingStatistics extends Component {
     return info;
   }
 
-  handleOnClick = () => {
-    this.setState({ show: true });
-    let buidlingName = this.state.selectedBuilding;
-    let selectedDate = this.formatDate(this.state.date);
-    var fetchedData = this.state.configuration;
-
+  func = (buidlingName,selectedDate,fetchedData) =>{
     let percentBookedHalls = this.statisticPercentOfBookedHalls(
       buidlingName,
       selectedDate,
@@ -176,7 +193,17 @@ class BuildingStatistics extends Component {
       data: percentBookedBuilding,
     });
     this.setState({ chartData: current });
+  }
+
+  handleOnClick = () => {
+    this.setState({ show: true });
+    let buidlingName = this.state.selectedBuilding;
+    let selectedDate = this.formatDate(this.state.date);
+    var fetchedData = this.state.configuration;
+
+    this.func(buidlingName,selectedDate,fetchedData);
   };
+
 
   render() {
     return (
