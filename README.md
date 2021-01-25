@@ -1,10 +1,3 @@
-# web-project-2020-FMI
-
-
-### Running the front end
-1) Clone the repository, enter the /frontend directory and open CMD 
-2) Write **npm install**
-3) Write **npm start**
-4) Open **localhost:3000**
-
-
+проектът се намира в папка wwwproject, началната страница е index.html
+файлът init.sql създава базата
+файлът populate.sql попълва с примерни данни

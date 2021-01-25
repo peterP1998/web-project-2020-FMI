@@ -25,7 +25,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             http_response_code(400);
         }
         else{
-            $building = new Building($obj['name'],$obj['capacity'],0.0,0.0);
+            $building = new Building($obj['name'],$obj['capacity'],$obj['latitude'],$obj['longtitude']);
             $added = $buildingCtrl->addNewBuilding($building);
             echo json_encode(['success' => $added]);
             http_response_code(200);

@@ -60,7 +60,7 @@ class Import extends Component {
             <div className={styles.container}>
                 <h1> Import Configuration </h1>
                 <div></div>
-                <input style={{ padding: "16px 160px" }} type="file" onChange={this.onFileChange}/>
+                <input style={{ padding: "16px 160px", width:"100%"}} type="file" onChange={this.onFileChange}/>
                 <div> </div>
                 <button className={styles.uploadButton} onClick={this.onFileUpload}>Import</button>{this.fileData()}
             </div>
